@@ -5,25 +5,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
 import com.ufpb.dsc.caderneta.model.Professor;
 
 public class Turma {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private Integer id;
-	
+
 	private List<Professor> professor;
-	
-	
+
 	private String nome;
-	
+
 	private String codigo;
-	
+
 	private String creat_at;
-	
-	
+
 	private Integer quantidade_alunos;
 
 	public Integer getQuantidade_alunos() {
@@ -34,8 +31,6 @@ public class Turma {
 		this.quantidade_alunos = quantidade_alunos;
 	}
 
-
-
 	public Integer getId() {
 		return id;
 	}
@@ -43,19 +38,17 @@ public class Turma {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	
+
 	public Turma() {
-		
+
 	}
-	public Turma(String nome , String codigo  , Integer quantidade_alunos, String creat_at) {
+
+	public Turma(String nome, String codigo, Integer quantidade_alunos, String creat_at) {
 		setNome(nome);
 		setCodigo(codigo);
 		setQuantidade_alunos(quantidade_alunos);
 		setCreat_at(creat_at);
 	}
-
-	
 
 	public List<Professor> getProfessor() {
 		return professor;
@@ -88,11 +81,5 @@ public class Turma {
 	public void setCreat_at(String creat_at) {
 		this.creat_at = creat_at;
 	}
-	
-
-
-}
-
-	
 
 }
