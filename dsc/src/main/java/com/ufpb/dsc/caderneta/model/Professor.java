@@ -22,6 +22,9 @@ public class Professor{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer id;
+	private String cpf;
+	private String nome;
+	private String codturma;
 	
 	
 	
@@ -50,6 +53,39 @@ public class Professor{
 
 	public void setList_alunos(List<Alunos> list_alunos) {
 		this.list_alunos = list_alunos;
+	}
+
+
+
+	public String getCpf() {
+		return cpf;
+	}
+
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+
+	public String getCodturma() {
+		return codturma;
+	}
+
+
+	public void setCodturma(String codturma) {
+		this.codturma = codturma;
 	}
 
 
