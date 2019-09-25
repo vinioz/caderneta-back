@@ -7,13 +7,11 @@ import javax.persistence.Id;
 
 
 @Entity
-public class Curso{
+public class Curso {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY))
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	
-	private Professor professor;
 	
 	private Integer quantidade_alunos;
 
@@ -45,22 +43,6 @@ public class Curso{
 		this.id = id;
 	}
 	
-	public Curso(String nome , String codigo , Professor professor , Integer quantidade_alunos, String creat_at) {
-	
-		setNome(nome);
-		setCodigo(codigo);
-		setProfessor(professor);
-		setQuantidade_alunos(quantidade_alunos);
-		setCreat_at(creat_at);
-	}
-	
-	public Professor getProfessor() {
-		return professor;
-	}
-
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
-	}
 
 	public String getNome() {
 		return nome;
