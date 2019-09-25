@@ -1,9 +1,14 @@
 package com.ufpb.dsc.caderneta.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 
 @Entity
@@ -44,6 +49,12 @@ public class Curso {
 	}
 	
 
+	@ManyToMany
+	@JoinTable(name="curso_turma", joinColumns= {@JoinColumn(name="curso_Id", referencedColumnName="id")},
+	inverseJoinColumns= {@JoinColumn(name="turma_id", referencedColumnName="id")})
+	private List<Turma> turmas_cursos;
+	
+	
 	public String getNome() {
 		return nome;
 	}

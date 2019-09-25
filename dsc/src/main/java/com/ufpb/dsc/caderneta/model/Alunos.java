@@ -1,9 +1,14 @@
 package com.ufpb.dsc.caderneta.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Alunos {
@@ -22,6 +27,31 @@ public class Alunos {
     
     private String cpfResponsavel;
 
+    private String dataNascimento;
+    
+    
+    @ManyToMany
+    @JoinTable(name="alunos_turma", joinColumns= {@JoinColumn(name="aluno_id", referencedColumnName="id")},
+	inverseJoinColumns= {@JoinColumn(name="turma_id", referencedColumnName="id")})
+    private List<Turma> turmas_aluno;
+    
+    
+    
+    
+    
+    public Alunos() {}
+    
+    
+    public Alunos(String nome,String cpf, String cpfResponsavel, String responsavel,String dataNascimento) {
+    	setNome(nome);
+    	setCpf(cpf);
+    	setCpfResponsavel(cpfResponsavel);
+    	setResponsavel(responsavel);
+    	setDataNascimento(dataNascimento);
+    	
+    }
+    
+    
     public String getNome() {
         return nome;
     }
@@ -72,4 +102,12 @@ public class Alunos {
                 ", cpfResponsavel='" + cpfResponsavel + '\'' +
                 '}';
     }
+
+	public String getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(String dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
 }
