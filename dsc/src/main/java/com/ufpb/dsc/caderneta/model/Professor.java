@@ -5,6 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+
+import java.util.List;
 
 
 @Entity
@@ -30,4 +36,24 @@ public class Professor{
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+	
+	
+	public List<Alunos> getList_alunos() {
+		return list_alunos;
+	}
+
+
+	public void setList_alunos(List<Alunos> list_alunos) {
+		this.list_alunos = list_alunos;
+	}
+
+
+
+	@ManyToMany
+	@JoinTable(name="professor_alunos", joinColumns= {@JoinColumn(name="professor_id", referencedColumnName="id")},
+	inverseJoinColumns= {@JoinColumn(name="alunos_id", referencedColumnName="id")})
+	private List<Alunos> list_alunos;
+
+	
 }
