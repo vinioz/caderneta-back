@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
@@ -28,8 +29,10 @@ public class Professor{
 	
 	
 	
-	@OneToOne
-	private Turma turma;
+	@ManyToMany
+	@JoinTable(name="professor_turmas", joinColumns= {@JoinColumn(name="professor_id", referencedColumnName="id")},
+	inverseJoinColumns= {@JoinColumn(name="turma_id", referencedColumnName="id")})
+	private List<Turma> turma;
 	
 	
 	public Professor() {}
