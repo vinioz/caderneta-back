@@ -193,4 +193,10 @@ public class ClientEndpoint {
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
 		}
 	}
+	
 }
+
+
+
+
+	

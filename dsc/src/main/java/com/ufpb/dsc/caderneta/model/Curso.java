@@ -19,7 +19,6 @@ public class Curso {
 	private Integer id;
 	
 	private Integer quantidade_alunos;
-
 	
 	private String nome;
 	

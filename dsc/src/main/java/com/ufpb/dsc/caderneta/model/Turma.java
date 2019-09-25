@@ -6,18 +6,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 
 @Entity
 public class Turma {
-
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
-	
-
 	
 	private String nome;
 
@@ -26,7 +25,6 @@ public class Turma {
 	private String creat_at;
 
 	private Integer quantidade_alunos;
-
 	
 	
 	public Integer getQuantidade_alunos() {
@@ -49,6 +47,13 @@ public class Turma {
 
 	}
 
+	
+	@ManyToMany
+	@JoinTable(name="turma_curso", joinColumns= {@JoinColumn(name="turma_Id", referencedColumnName="id")},
+	inverseJoinColumns= {@JoinColumn(name="curso_id", referencedColumnName="id")})
+	private List<Curso> cursos_turmas;
+	
+	
 	public String getNome() {
 		return nome;
 	}
