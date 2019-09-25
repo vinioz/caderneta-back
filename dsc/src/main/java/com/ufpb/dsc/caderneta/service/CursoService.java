@@ -38,13 +38,13 @@ public class CursoService {
 				this.cursoRepository.addCurso(codigo, creat_at, quant_alunos,nome);
 				return true;
 			}else {
-				if(this.cursoRepository.getCurso().size() == 0) {
-					this.cursoRepository.addCurso(codigo, creat_at, quant_alunos,nome);
-					return true;
+				if(this.cursoRepository.getCurso().size() == 0) {	this.cursoRepository.addCurso(codigo, creat_at, quant_alunos,nome);
+				return true;
 				}
 				
 				return false;
 			}
+			
 		
 		}catch(NullPointerException e) {
 			return false;
@@ -69,9 +69,12 @@ public class CursoService {
 	}
 	
 	
-	private Object checkCursoByCodigo(String codigo) {
-		// TODO Auto-generated method stub
-		return null;
+	private Curso checkCursoByCodigo(String codigo) {
+		try {
+			return this.cursoRepository.checkIfCursoExistByCod(codigo);
+		}catch(NullPointerException e) {
+			return null;
+		}
 	}
 
 

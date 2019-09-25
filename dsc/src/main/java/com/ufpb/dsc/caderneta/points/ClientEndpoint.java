@@ -2,12 +2,15 @@ package com.ufpb.dsc.caderneta.points;
 
 import com.ufpb.dsc.caderneta.dtos.AlunoDTO;
 import com.ufpb.dsc.caderneta.dtos.AlunosDTOLIST;
+import com.ufpb.dsc.caderneta.dtos.CursoDTO;
 import com.ufpb.dsc.caderneta.dtos.TurmaDTO;
 import com.ufpb.dsc.caderneta.dtos.TurmaDTOLIST;
 import com.ufpb.dsc.caderneta.model.Alunos;
+import com.ufpb.dsc.caderneta.model.Curso;
 import com.ufpb.dsc.caderneta.model.Turma;
 import com.ufpb.dsc.caderneta.repository.AlunosRepository;
 import com.ufpb.dsc.caderneta.service.AlunoService;
+import com.ufpb.dsc.caderneta.service.CursoService;
 import com.ufpb.dsc.caderneta.service.TurmaService;
 import com.ufpb.dsc.caderneta.util.MyCalendary;
 
@@ -38,11 +41,20 @@ public class ClientEndpoint {
 	private TurmaService turmaService;
 
 	
+	private CursoService cursoService;
+	
+	
+	/**
+	 * 
+	 * @param alunoService
+	 * @param turmaService
+	 */
 	
 	@Autowired
-	public ClientEndpoint(AlunoService alunoService,TurmaService turmaService) {
+	public ClientEndpoint(AlunoService alunoService,TurmaService turmaService,CursoService cursoService) {
 		this.alunoService=alunoService;
 		this.turmaService=turmaService;
+		this.cursoService=cursoService;
 	}
 	
 	
@@ -124,8 +136,6 @@ public class ClientEndpoint {
 	}
 	
 	
-	
-	
 	@PostMapping(value="/add/turma/",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TurmaDTO> addTurma(@RequestParam("codigo") String codigo,
 			@RequestParam("quant_alunos") Integer quant,
@@ -137,7 +147,8 @@ public class ClientEndpoint {
 		if(result_insert) {
 			TurmaDTO dto = new TurmaDTO("Turma Criada com sucesso!",codigo,false,0);
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
-		}else {
+		}
+		else {
 			TurmaDTO dto = new TurmaDTO("Não foi possivel criar uma turma!",codigo,true,0);
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(dto);
 		}
@@ -194,6 +205,78 @@ public class ClientEndpoint {
 		}
 	}
 	
+	
+	@PostMapping(value="/add/curso/",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CursoDTO> addCurso(@RequestParam("codigo") String codigo,
+			@RequestParam("quant_turmas") Integer quant,
+			@RequestParam("nome") String nome){
+				
+		
+		MyCalendary calendary = new MyCalendary();
+		String[] result = calendary.getFormatedDataToday(calendary.getDateToday());
+		String creat_at = result[0]+"/"+result[1]+"/"+result[2]+"/"+result[3];
+		
+		boolean xd = this.cursoService.addCurso(codigo, nome, quant, creat_at);
+		if(xd) {
+			CursoDTO dto = new CursoDTO("Curso Criado com sucesso!",codigo,false,0);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
+		}else {
+			CursoDTO dto = new CursoDTO("Curso não foi criado",codigo,true,0);
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(dto);
+		}
+	}
+	
+	
+	@PutMapping(value="/edit/curso/",produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<CursoDTO> edtCurso(@RequestParam("codigo") String codigo,
+			@RequestParam("quant_turmas") Integer quant,
+			@RequestParam("nome") String nome){
+	
+		Integer result = this.cursoService.edtCurso(codigo, nome, quant);
+		
+		if(result != 0) {
+			CursoDTO dto = new CursoDTO("Curso Editado com sucesso!",codigo,false,0);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
+		}else {
+			CursoDTO dto = new CursoDTO("Curso não foi editado",codigo,true,0);
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(dto);
+		}
+	}
+	
+	
+	
+	@DeleteMapping(value="/delete/curso/", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<CursoDTO> removeCurso(@RequestParam("codigo") String codigo){
+		Curso curso = this.cursoService.checkTurmaByCodigo(codigo);
+		if(curso != null) {
+			this.cursoService.removeCurso(curso);
+			CursoDTO dto = new CursoDTO("Curso Removido com sucesso!",codigo,false,0);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
+		}else {
+			CursoDTO dto = new CursoDTO("Não foi Possivel Remover o curso!",codigo,false,0);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
+		}
+	}
+	
+	
+	
+	@GetMapping(value="/get/curso/", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<TurmaDTOLIST> getCursos(){
+		List<Curso> cursos = this.cursoService.getCurso();
+		System.err.println(cursos);
+		
+		if(cursos != null) {
+			TurmaDTOLIST dto = new TurmaDTOLIST();
+			dto.setList_cursos(cursos);
+			dto.setQuantity(cursos.size());
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
+		}else {
+			TurmaDTOLIST dto = new TurmaDTOLIST();
+			dto.setList_cursos(null);
+			dto.setQuantity(0);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
+		}
+	}
 }
 
 

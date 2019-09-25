@@ -53,7 +53,6 @@ public class Turma {
 	inverseJoinColumns= {@JoinColumn(name="curso_id", referencedColumnName="id")})
 	private List<Curso> cursos_turmas;
 	
-	
 	public String getNome() {
 		return nome;
 	}

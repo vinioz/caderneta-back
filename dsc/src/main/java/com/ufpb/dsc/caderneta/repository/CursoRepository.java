@@ -35,7 +35,7 @@ public interface CursoRepository extends JpaRepository<Curso, Integer> {
 	
 	
 	
-	@Query(value="select * from turma",nativeQuery=true)
+	@Query(value="select * from curso",nativeQuery=true)
 	List<Curso> getCurso();
 	
 	/**
@@ -49,7 +49,8 @@ public interface CursoRepository extends JpaRepository<Curso, Integer> {
 	@Transactional
 	@Query(value="update curso set nome=:nome,quantidade_alunos=:quantidade_alunos "
 			+ "where codigo=:codigo",nativeQuery=true)
-	Integer editCurso(@Param("codigo") String codigo, @Param("nome") String nome, @Param("quantidade_alunos") Integer quantidade_alunos);
+	Integer editCurso(@Param("codigo") String codigo, @Param("nome") String nome,
+			@Param("quantidade_alunos") Integer quantidade_alunos);
 	
 	
 	
