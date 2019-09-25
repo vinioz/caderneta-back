@@ -1,5 +1,6 @@
 package com.ufpb.dsc.caderneta.points;
 
+import com.ufpb.dsc.caderneta.dtos.AlunoDTO;
 import com.ufpb.dsc.caderneta.model.Alunos;
 import com.ufpb.dsc.caderneta.repository.AlunosRepository;
 import com.ufpb.dsc.caderneta.service.AlunoService;
@@ -17,6 +18,7 @@ public class ClientEndpoint {
     
 	
 	private AlunoService alunoService;
+
 	
 	
 	@Autowired
@@ -35,6 +37,36 @@ public class ClientEndpoint {
 		}else {
 			// DTO RESPONSE STATUS 403 FORRBIDEN HTTP.STATUS.FORRBIDEN = DTO RETORNA MENSAGEM DE ERROR;
 		}
+	
+		return null;
+	}
+	
+	
+	@PutMapping(value="/edit/aluno", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AlunoDTO> editAluno(@RequestParam String cpf, @RequestParam String cpfResponsavel,
+			@RequestParam String nome , @RequestParam String dataNascimento , @RequestParam String responsavel){
+		
+		
+		boolean result = this.alunoService.checkAlunoByCpf(cpf);
+		if(result) {
+			if(this.alunoService.editAluno(cpf, cpfResponsavel, nome, dataNascimento, responsavel)) {
+				// DTO SUCESSO OK 200
+			}else {
+				// ERROR ACONTECEU AO EDITAR;
+			}
+		}else {
+			// DTO ERRO 
+		}
+		return null;
+		
+	}
+	
+	@DeleteMapping(value="/delete/aluno", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AlunoDTO> removeAluno(@RequestParam String cpf){
+		
+		
+		return null;
+		
 	}
     
 }

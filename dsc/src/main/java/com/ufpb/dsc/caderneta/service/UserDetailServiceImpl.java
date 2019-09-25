@@ -25,16 +25,9 @@ public class UserDetailServiceImpl implements UserDetailsService  {
 
 	
 	
-	
-	private AlunosRepository alunoRepository;
-	
-	private ProfessorRepository professorRepository;
-	
-	
 	@Autowired
-	public UserDetailServiceImpl( AlunosRepository alunoRepository, ProfessorRepository professorRepository) {
-		this.alunoRepository=alunoRepository;
-		this.professorRepository=professorRepository;
+	public UserDetailServiceImpl( ) {
+		
 	}
 
 
